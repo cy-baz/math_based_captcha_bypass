@@ -5,10 +5,15 @@ A tool to brute force a login page while submitting math based captcha.
 This tool accepts a variety of parameters to make it easier to have a flexible tool which can be customized on the go to bypass simple math based captcha.
 
 ## Quick Examples
+- Specifying the login page, characters used after the equation is specified, user and password files.
 ```sh
-python3 math_based_captcha_bypass.py  -l http://TheVulnerableApplication/login -m "?" -off 15 -u usernames.txt -p passwords.txt -up username -pp password -cp captcha
-python3 math_based_captcha_bypass.py  -l http://TheVulnerableApplication/login -m "?" -off 15 -u usern.txt -p pass.txt```
+python3 math_based_captcha_bypass.py  -l http://TheVulnerableApplication/login -m "= ?" -u usern.txt -p pass.txt```
 ```
+- Specifying the login page, characters after the equation, character offset start before the specified characters, user and pass file, parameter names for user, password and captcha request
+```sh
+python3 math_based_captcha_bypass.py  -l http://TheVulnerableApplication/login -m "= ?" -off 15 -u usernames.txt -p passwords.txt -up username -pp password -cp captcha
+```
+
 ## Requirements
 This python program uses the following libraries:
 - Requests
