@@ -1,11 +1,11 @@
-# math_based_captcha_bypass
+# Math capture bypass script
 
 ## Brief description
-A tool to brute force a login page while submitting math based captcha.
-This tool accepts a variety of parameters to make it easier to have a flexible tool which can be customized on the go to bypass simple math based captcha.
+A tool to brute force a login page while solving math based captcha.
+This tool accepts a variety of parameters to make it easier to be a flexible tool which can be customized on the go to bypass simple math based captcha on login pages.
 
 ## Quick Examples
-- Specifying the login page, characters used after the equation is specified, user and password files.
+- Specifying the login page, characters used after the equation is// specified, user and password files.
 ```sh
 python3 math_based_captcha_bypass.py  -l http://TheVulnerableApplication/login -m "= ?" -u users.txt -p pass.txt
 ```
