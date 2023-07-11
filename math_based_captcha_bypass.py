@@ -146,11 +146,10 @@ def brute_force(result):
       p = s.post(url, data=payload)
       result = arithmetic(p)
 
-      if error not in p.text and "does not exist" not in p.text:
+      # This is how we know if the credentials worked, more error checks can be added here if needed
+      if error not in p.text: # and "does not exist" not in p.text:
        print ("+++ valid credentials: " + username + ":" + password)
        print (p.text) # Print the page response
-
-
 
 if __name__ =="__main__":
  brute_force(result)
