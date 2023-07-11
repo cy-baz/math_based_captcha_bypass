@@ -11,6 +11,7 @@ This tool accepts a variety of parameters to make it easier to be a flexible too
 - The equation needs to be in plain text on the web application
 - The operator (i.e. +) needs to have a space before or after it for them to be separated
 - The string used to identify the equation may not work properly if it is not unique (i.e. occurs more than once in the response)
+- The script doesn't check if it is a login page, so wrong urls may cause unusual output
 
 ## Quick Examples
 - Specifying the login page, characters used after the equation is// specified, user and password files.
