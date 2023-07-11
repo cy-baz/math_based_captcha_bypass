@@ -23,7 +23,7 @@ python3 math_based_captcha_bypass.py  -l http://TheVulnerableApplication/login -
 - The string used to identify the equation may not work properly if it is not unique (i.e. occurs more than once)
 
 ## Parameter Overview
-Most parameters are straightforward such as:
+Some parameters are straightforward such as:
 ```py
 -l : The URL to send the login request to
 -u : The file with usernames in it (separated on each line)
