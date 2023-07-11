@@ -35,8 +35,9 @@ parser.add_argument('-e',dest='error', help="Error to use as a benchmark", defau
 parser.add_argument('-up',dest='userParam', help="Name of username parameter",default="username")
 parser.add_argument('-pp',dest='passParam', help="Name of password parameter",default="password")
 parser.add_argument('-cp',dest='captchaParam', help="Name of capture parameter",default="captcha")
-parser.add_argument('-m',dest='matchEq', help="String to match after the equation is specified. This should only occur once, and it should be after the equation",default="= ?")
+parser.add_argument('-m',dest='matchEq', help="String to match after/before the equation is specified. This string should only occur once in the response.",default="= ?")
 parser.add_argument('-off',dest='offChange',type=int, default=12, help="Number of characters to look at prior to the matchEq string for the equation")
+parser.add_argument('-d',dest='direction', default="before", help="Decides if the offset should be before or after the specified string")
 args = parser.parse_args()
 
 
@@ -45,6 +46,7 @@ url = args.url
 user = args.user
 passwords = args.password
 error = args.error
+direction = args.direction
 
 # URL Parameter check
 if not url:
@@ -54,7 +56,10 @@ elif "http://" not in url and "https://" not in url:
  print("Error: URL needs http:// or https:// at the beginning")
  quit()
 
-
+if direction != 'before' and direction != 'after':
+  print("Error: direction parameter should be 'before' or 'after'")
+  quit()
+ 
 ## Parameters for URL
 userParam = args.userParam
 passParam = args.passParam
@@ -68,9 +73,13 @@ offChange = args.offChange
 def arithmetic(p):
  # The location the captcha is found, based on the "= ?" being how it is identified
  offset = (p.text.find(matchEq))
- # Finding the equation before the "= ?", this might need tweaking based on the application/
- math = (p.text[offset-offChange:offset])
-
+ if direction == 'before':
+  # Finding the equation before the "= ?", this might need tweaking based on the application/
+  math = (p.text[offset-offChange:offset])
+ elif direction == 'after':
+  ## If you find the equation after some string, use the following instead
+   math = (p.text[offset:offset+offChange])
+ 
  # Splitting the equation into 3 parts (2 numbers and an operator)
  try:
   msplit = (math.split())
