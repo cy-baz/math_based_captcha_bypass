@@ -29,13 +29,13 @@ Some parameters are straightforward such as:
 -u : The file with usernames in it (separated on each line)
 -p : The file with passwords in it (separated on each line)
 ```
-Then there are parameters used to declare the name of the parameters needed for the request
+Then there are parameters used to declare the name of the parameters needed for the request:
 ```py
 -up: Parameter name for the username value
 -pp: Parameter name for the password value
 -cp: Parameter name for the captcha value 
 ```
-Finally, there are the parameters which tweak what the program looks for to help make sure the requests work as expected
+Finally, there are the parameters which tweak what the program looks for to help make sure the requests work as expected:
 ```py
 -e: The error messsage which occurs when the username/password is incorrect
 -m: The string that occurs AFTER the equation is mentioned
