@@ -166,8 +166,8 @@ def brute_force(result):
       if viewResponse is not None:
        print (p.text)
 
-      # This is how we know if the credentials worked, more error checks can be added here if needed
-      if error not in p.text and "does not exist" not in p.text:
+      # This is how we know if the credentials worked, more error checks can be added here if needed (as seen after the #)
+      if error not in p.text: # and "does not exist" not in p.text:
        print ("+++ valid credentials: " + username + ":" + password)
        print (p.text) # Print the page response
        
