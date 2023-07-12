@@ -46,3 +46,15 @@ Finally, there are the parameters which tweak what the program looks for to help
 -d : Direction either 'before' or 'after' the specified string (-m) is used
   - By default, it is 'before'
 ```
+### Example about the parameters that tweak what to look for
+- Let's say you have the following line
+  ```Please solve: 136 - 64 = ?'''
+- In this case the string before and after the equation we need (136 - 64) is unique and only occurs once
+- Therefore you the command can be something like
+```sh
+# Finding the equation before the provided string ( " = ?")
+python3 math_based_captcha_bypass.py  -l http://TheVulnerableApplication/login -m " = ?" -off 9
+
+# Finding the equation after the provided string ("Please solve:")
+python3 math_based_captcha_bypass.py  -l http://TheVulnerableApplication/login -m "Please solve:" -off 9 -d after
+```
