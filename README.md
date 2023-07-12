@@ -9,9 +9,10 @@ This tool accepts a variety of parameters to make it easier to be a flexible too
  - Requests
  - argparse
 - The equation needs to be in plain text on the web application
-- The operator (i.e. +) needs to have a space before or after it for them to be separated
+- The operator (i.e. +) needs to have a space before or after it for them to be separated.
+  - If not, they could probably be separated in the arithmetic() function.
 - The string used to identify the equation may not work properly if it is not unique (i.e. occurs more than once in the response)
-- The script doesn't check if it is a login page, so wrong urls may cause unusual output
+- The script doesn't check if it is a login page, so wrong urls may cause unusual output.
 
 ## Quick Examples
 - Specifying the login page, characters used after the equation is// specified, user and password files.
@@ -36,6 +37,13 @@ Then there are parameters used to declare the name of the parameters needed for 
 -pp: Parameter name for the password value
 -cp: Parameter name for the captcha value 
 ```
+Additionally, there are parameters that help check if the payloads, math and responses are as expected:
+```py
+-vP: See the payload  used for each brute forcing attempt. This can help see if the credentials and captcha work as expected
+-vR: Recieve the response after each bruteforcing attempt. This helps see if the bypass is working (in some cases).
+-vM: See what is being interpreted as the equation. If this is wrong, the captcha will not be right. This cab be used to see if the combination of '-m', '-off' and '-d' have found the correct part of the page with the equation.
+```
+
 Finally, there are the parameters which tweak what the program looks for to help make sure the requests work as expected:
 ```py
 -e: The error messsage which occurs when the username/password is incorrect
@@ -58,3 +66,5 @@ python3 math_based_captcha_bypass.py  -l http://TheVulnerableApplication/login -
 # Finding the equation after the provided string ("Please solve:")
 python3 math_based_captcha_bypass.py  -l http://TheVulnerableApplication/login -m "Please solve:" -off 9 -d after
 ```
+
+
