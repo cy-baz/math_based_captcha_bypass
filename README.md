@@ -4,6 +4,8 @@
 A tool to brute force a login page while solving math based captcha.
 This tool accepts a variety of parameters to make it easier to be a flexible tool which can be customized on the go to bypass simple math based captcha on login pages.
 
+It does this by looking for specific string that occurs before/after the equation and uses a user provided offset to identify where the equation should start/finish.
+
 ## Requirements / Limitations
 - This python program uses the following libraries:
  - Requests
