@@ -37,7 +37,7 @@ Then there are parameters used to declare the name of the parameters needed for 
 -pp: Parameter name for the password value
 -cp: Parameter name for the captcha value 
 ```
-Additionally, there are parameters that help check if the payloads, math and responses are as expected:
+Additionally, there are parameters that help check if the payloads, math and responses are as expected. These don't look for a specific string when used (i.e. "-vP 0"), so if they are called with a value, they will be used:
 ```py
 -vP: See the payload  used for each brute forcing attempt. This can help see if the credentials and captcha work as expected
 -vR: Recieve the response after each bruteforcing attempt. This helps see if the bypass is working (in some cases).
