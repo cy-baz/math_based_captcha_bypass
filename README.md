@@ -8,9 +8,9 @@ This tool accepts a variety of parameters to make it easier to be a flexible too
 - This python program uses the following libraries:
  - Requests
  - argparse
-- The equation needs to be in plain text on the web application
+- The equation needs to be in plain text on the web application (i.e. not an image)
 - The operator (i.e. +) needs to have a space before or after it for them to be separated.
-  - If not, they could probably be separated in the arithmetic() function.
+  - If not, they could probably be separated in the arithmetic() function with some tweaks to how it works.
 - The string used to identify the equation may not work properly if it is not unique (i.e. occurs more than once in the response)
 - The script doesn't check if it is a login page, so wrong urls may cause unusual output.
 
@@ -37,11 +37,11 @@ Then there are parameters used to declare the name of the parameters needed for 
 -pp: Parameter name for the password value
 -cp: Parameter name for the captcha value 
 ```
-Additionally, there are parameters that help check if the payloads, math and responses are as expected. These don't look for a specific string when used (i.e. "-vP 0"), so if they are called with a value, they will be used:
+Additionally, there are parameters that help check if the payloads, math and responses are as expected. These don't look for a specific string when used (i.e. "-vP 0"), so as long as they are called with a value, they will be used:
 ```py
 -vP: See the payload  used for each brute forcing attempt. This can help see if the credentials and captcha work as expected
 -vR: Recieve the response after each bruteforcing attempt. This helps see if the bypass is working (in some cases).
--vM: See what is being interpreted as the equation. If this is wrong, the captcha will not be right. This cab be used to see if the combination of '-m', '-off' and '-d' have found the correct part of the page with the equation.
+-vM: See what is being interpreted as the equation. If the equation printed is wrong, the captcha will unlikely be right. This cab be used to see if the combination of '-m', '-off' and '-d' have found the correct part of the page with the equation.
 ```
 
 Finally, there are the parameters which tweak what the program looks for to help make sure the requests work as expected:
